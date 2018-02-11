@@ -14,7 +14,7 @@ object Main {
 
 class TestStand {
     private var process = true
-    lateinit var scanner: Scanner
+    private lateinit var scanner: Scanner
 
     fun launch() {
         initialize()
@@ -121,8 +121,7 @@ class TestStand {
 
         val size = 20_000
 
-        println("Введите размер массива: ")
-        val arrayLength = scanner.nextLine().trim().toInt()
+        val arrayLength = readArrayLength()
 
         repeat(5) {
             print("Ждем-с...")
@@ -135,6 +134,19 @@ class TestStand {
 
         println("Завершаем")
         println()
+    }
+
+    private fun readArrayLength(): Int {
+        var length: Int
+        do {
+            length = try {
+                println("Введите размер массива больше 0: ")
+                scanner.nextLine().trim().toInt()
+            } catch (e: Exception) {
+                -1
+            }
+        }while (length < 1)
+        return length
     }
 
     private fun finish() {
