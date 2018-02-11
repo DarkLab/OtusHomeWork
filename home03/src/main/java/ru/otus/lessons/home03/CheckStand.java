@@ -38,22 +38,13 @@ public class CheckStand {
             String input = scanner.nextLine();
             switch (input.toLowerCase().trim()) {
                 case "1":
-                    for (int i = 0; i < numberOfIteration; i++) {
-                        System.out.println("\nЦикл " + (i + 1));
-                        simpleObject();
-                    }
+                    simpleObject();
                     break;
                 case "2":
-                    for (int i = 0; i < numberOfIteration; i++) {
-                        System.out.println("\nЦикл " + (i + 1));
-                        emptyString();
-                    }
+                    emptyString();
                     break;
                 case "3":
-                    for (int i = 0; i < numberOfIteration; i++) {
-                        System.out.println("\nЦикл " + (i + 1));
-                        emptyArray();
-                    }
+                    emptyArray();
                     break;
                 case "4":
                     dynamicArray();
@@ -88,68 +79,86 @@ public class CheckStand {
         System.out.println("check Object size");
 
         int size = 20_000_000;
-        tryCleanMemory();
-        long mem = getMem();
 
-        Object[] array = new Object[size];
-        System.out.println("Создан массив для " + array.length + " элементов");
+        for (int k = 0; k < numberOfIteration; k++) {
+            System.out.println("\nЦикл " + (k + 1));
+            tryCleanMemory();
+            long mem = getMem();
 
-        long mem2 = getMem();
+            Object[] array = new Object[size];
+            System.out.println("Создан массив для " + array.length + " элементов");
+
+            long mem2 = getMem();
 //        System.out.println("" + (mem2 - mem) / size);
 
-        for (int i = 0; i < size; i++) {
-            array[i] = new Object();
-            if (i % 1_000_000 == 0) {
-                System.out.print(".");
+            for (int i = 0; i < size; i++) {
+                array[i] = new Object();
+                if (i % 1_000_000 == 0) {
+                    System.out.print(".");
+                }
             }
+            System.out.println("\rПоложили в массив " + size + " элементов.");
+            long mem3 = getMem();
+            System.out.println("Память под один простой объект примерно " + (mem3 - mem2) / size);
         }
-        System.out.println("\rПоложили в массив " + size + " элементов.");
-        long mem3 = getMem();
-        System.out.println("Память под один простой объект примерно " + (mem3 - mem2) / size);
     }
 
     private void emptyString() {
         System.out.println("check empty String size");
 
         int size = 20_000_000;
-        tryCleanMemory();
 
-        long mem = getMem();
+        for (int k = 0; k < numberOfIteration; k++) {
+            System.out.println("\nЦикл " + (k + 1));
+            tryCleanMemory();
 
-        String[] array = new String[size];
-        System.out.println("Создали массив и зарезервировали в нем " + array.length + " элементов");
+            long mem = getMem();
 
-        long mem2 = getMem();
+            String[] array = new String[size];
+            System.out.println("Создали массив и зарезервировали в нем " + array.length + " элементов");
+
+            long mem2 = getMem();
 //        System.out.println("Память под объект примерно " + (mem2 - mem) / size);
 
-        for (int i = 0; i < size; i++) {
-            array[i] = new String("");
-            if (i % 1_000_000 == 0) {
-                System.out.print(".");
+            for (int i = 0; i < size; i++) {
+                array[i] = new String(new char[0]);
+                if (i % 1_000_000 == 0) {
+                    System.out.print(".");
+                }
             }
+            System.out.println("\rСоздано " + size + " пустых строк.");
+            long mem3 = getMem();
+            System.out.println("Размер пустой строки примерно " + (mem3 - mem2) / size);
         }
-        System.out.println("\rСоздано " + size + " пустых строк.");
-        long mem3 = getMem();
-        System.out.println("Размер пустой строки примерно " + (mem3 - mem2) / size);
     }
 
     private void emptyArray() {
         System.out.println("check empty Array size");
 
-        tryCleanMemory();
+        int size = 20_000_000;
+        for (int k = 0; k < numberOfIteration; k++) {
+            System.out.println("\nЦикл " + (k + 1));
+            tryCleanMemory();
 
-        long mem = getMem();
+            long mem = getMem();
 
-        String[] array = new String[0];
-        System.out.println("Пустой массив создан");
+            int[][] intArray = new int[size][1];
+            for (int i = 0; i < size; i++) {
+                intArray[i] = new int[0];
+                if (i % 1_000_000 == 0) {
+                    System.out.print(".");
+                }
+            }
 
-        long mem2 = getMem();
-        System.out.println("Занимаяемая память " + (mem2 - mem));
+            long mem2 = getMem();
+            System.out.println("\rЗанимаемая память " + (mem2 - mem) / size);
+        }
     }
 
     private void dynamicArray() {
         System.out.println("check dynamic Array size");
 
+        int testSize = 20_000;
         int size = -1;
         do {
             System.out.println("Введите количество элементов массива (больше 0): ");
@@ -167,17 +176,17 @@ public class CheckStand {
 
             long mem = getMem();
 
-            String[] array = new String[size];
-            for (int i = 0; i < size; i++) {
-                array[i] = new String("");
+            int[][] intArray = new int[testSize][1];
+            for (int i = 0; i < testSize; i++) {
+                intArray[i] = new int[size];
                 if (i % 1_000_000 == 0) {
                     System.out.print(".");
                 }
             }
-            System.out.println("\rВ массиве " + array.length + " элементов");
 
             long mem2 = getMem();
-            System.out.println("Память под массив " + (mem2 - mem));
+            System.out.println("\rВ массиве " + size + " элементов");
+            System.out.println("Память под массив " + (mem2 - mem)/testSize);
         }
     }
 
