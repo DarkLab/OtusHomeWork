@@ -179,7 +179,7 @@ public class CheckStand {
             int[][] intArray = new int[testSize][1];
             for (int i = 0; i < testSize; i++) {
                 intArray[i] = new int[size];
-                if (i % 1_000_000 == 0) {
+                if (i % 1_000 == 0) {
                     System.out.print(".");
                 }
             }
